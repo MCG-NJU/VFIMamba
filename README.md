@@ -1,6 +1,6 @@
-# VFIMamba: Video Frame Interpolation with State Space Models [arxiv](https://arxiv.org/pdf/2407.02315?)
+# VFIMamba: Video Frame Interpolation with State Space Models [arxiv](https://arxiv.org/abs/2407.02315)
 
-> [**VFIMamba: Video Frame Interpolation with State Space Models**](https://arxiv.org/pdf/2407.02315?)<br>
+> [**VFIMamba: Video Frame Interpolation with State Space Models**](https://arxiv.org/abs/2407.02315)<br>
 > [Guozhen Zhang](https://github.com/GuozhenZhang1999), [Chunxu Liu](https://scholar.google.com.hk/citations?hl=zh-CN&view_op=list_works&gmla=AKKJWFe0ZBvfA_4yxMRe8BW79xNafjCwXtxN10finOaqV1EREnZGxSX6DbpZelBUJD0GZmp5S7unCf76xrgOfnS6SVA&user=dvUKnKEAAAAJ), [Yutao Cui](https://scholar.google.com.hk/citations?user=TSMchWcAAAAJ&hl=zh-CN), Xiaotong Zhao, [Kai Ma](https://scholar.google.com.hk/citations?user=FSSXeyAAAAAJ&hl=zh-CN), [Limin Wang](http://wanglimin.github.io/)
 <div align="center">
   <img src="figs/main0.png" width="1000"/>
