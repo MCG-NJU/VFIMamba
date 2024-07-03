@@ -86,7 +86,15 @@ python benchmark/TimeTest.py --model **model[VFIMamba_S/VFIMamba]** --H **SIZE**
 If you think this project is helpful in your research or for application, please feel free to leave a star⭐️ and cite our paper:
 
 ```
-TODO
+@misc{zhang2024vfimambavideoframeinterpolation,
+      title={VFIMamba: Video Frame Interpolation with State Space Models}, 
+      author={Guozhen Zhang and Chunxu Liu and Yutao Cui and Xiaotong Zhao and Kai Ma and Limin Wang},
+      year={2024},
+      eprint={2407.02315},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2407.02315}, 
+}
 ```
 
 ## :heartpulse:	License and Acknowledgement
