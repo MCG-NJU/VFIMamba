@@ -15,7 +15,7 @@
 In this work, we have introduced VFIMamba, the first approach to adapt the SSM model to the video frame interpolation task. We devise the Mixed-SSM Block (MSB) for efficient inter-frame modeling using S6. We also explore various rearrangement methods to convert two frames into a sequence, discovering that interleaved rearrangement is more suitable for VFI tasks. Additionally, we propose a curriculum learning strategy to further leverage the potential of the S6 model. Experimental results demonstrate that VFIMamba achieves the state-of-the-art performance across various datasets, in particular highlighting the potential of the SSM model for VFI tasks with high resolution.
 
 <div align="center">
-  <img src=figs/main.png width=400 />
+  <img src=figs/main.png width=800 />
 </div>
 
 ## :two_hearts:Installation
