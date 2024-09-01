@@ -6,6 +6,8 @@ import random
 from .warplayer import warp
 from .refine import *
 
+from huggingface_hub import PyTorchModelHubMixin
+
 def conv(in_planes, out_planes, kernel_size=3, stride=1, padding=1, dilation=1):
     return nn.Sequential(
         nn.Conv2d(in_planes, out_planes, kernel_size=kernel_size, stride=stride,
@@ -76,7 +78,7 @@ class IFBlock(nn.Module):
         mask = tmp[:, 4:5]
         return flow, mask
     
-class MultiScaleFlow(nn.Module):
+class MultiScaleFlow(nn.Module, PyTorchModelHubMixin, repo_url="https://github.com/MCG-NJU/VFIMamba", pipeline_tag="video-frame-interpolation", license="apache-2.0"):
     def __init__(self, backbone, **kargs):
         super(MultiScaleFlow, self).__init__()
         self.flow_num_stage = len(kargs['hidden_dims'])
