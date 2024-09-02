@@ -45,15 +45,16 @@ class Model:
     def from_pretrained(self, model_name):
         try:
             from huggingface_hub import hf_hub_download
+            assert model_name in ["VFIMamba", "VFIMamba_S"], "Please select a valid model name from ['VFIMamba', 'VFIMamba_S']"
 
             ckpt_path = hf_hub_download(
-                repo_id="MCG-NJU/VFIMamba", filename="ckpt/" + model_name + ".pkl"
+                repo_id=f"MCG-NJU/{model_name}", filename=model_name + ".pkl"
             )
             checkpoint = torch.load(ckpt_path)
         except:
             # In case the model is not hosted on huggingface
             # or the user cannot import huggingface_hub correctly, model_name option: VFIMamba, VFIMamba_S
-            _VFIMAMBA_URL = f"https://huggingface.co/MCG-NJU/VFIMamba/resolve/main/ckpt/{model_name}.pkl"
+            _VFIMAMBA_URL = f"https://huggingface.co/MCG-NJU/{model_name}/resolve/main/{model_name}.pkl"
             checkpoint = torch.hub.load_state_dict_from_url(_VFIMAMBA_URL)
 
         self.net.load_state_dict(convert(checkpoint), strict=True)
