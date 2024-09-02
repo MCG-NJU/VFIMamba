@@ -5,7 +5,13 @@ from model.warplayer import warp
 
 from config import *
 
-    
+def convert(param):
+    return {
+        k.replace("module.", ""): v
+        for k, v in param.items()
+        if "module." in k and 'attn_mask' not in k and 'HW' not in k
+    }
+
 class Model:
     def __init__(self, local_rank):
         backbonetype, multiscaletype = MODEL_CONFIG['MODEL_TYPE']
@@ -30,17 +36,27 @@ class Model:
         self.net.to(torch.device("cuda"))
 
     def load_model(self, name=None, rank=0, real=False):
-        def convert(param):
-            return {
-            k.replace("module.", ""): v
-                for k, v in param.items()
-                if "module." in k and 'attn_mask' not in k and 'HW' not in k
-            }
         if rank <= 0 :
             if name is None:
                 name = self.name
             print(f"loading {name} ckpt")
             self.net.load_state_dict(convert(torch.load(f'ckpt/{name}.pkl')), strict=True)
+
+    def from_pretrained(self, model_name):
+        try:
+            from huggingface_hub import hf_hub_download
+
+            ckpt_path = hf_hub_download(
+                repo_id="MCG-NJU/VFIMamba", filename="ckpt/" + model_name + ".pkl"
+            )
+            checkpoint = torch.load(ckpt_path)
+        except:
+            # In case the model is not hosted on huggingface
+            # or the user cannot import huggingface_hub correctly, model_name option: VFIMamba, VFIMamba_S
+            _VFIMAMBA_URL = f"https://huggingface.co/MCG-NJU/VFIMamba/resolve/main/ckpt/{model_name}.pkl"
+            checkpoint = torch.hub.load_state_dict_from_url(_VFIMAMBA_URL)
+
+        self.net.load_state_dict(convert(checkpoint), strict=True)
 
     @torch.no_grad()
     def hr_inference(self, img0, img1, local, TTA = False, down_scale = 1.0, timestep = 0.5, fast_TTA = False):
