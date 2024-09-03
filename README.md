@@ -37,8 +37,8 @@ CUDA 11.7
 1. Download the [model checkpoints](https://huggingface.co/MCG-NJU/VFIMamba_ckpts/tree/main) and put the ```ckpt``` folder into the root dir. We also support directly importing model weights from HuggingFace. Please refer to hf_demo_2x.py.
 2. Run the following commands to generate 2x and Nx (arbitrary) frame interpolation demos:
 
-We provide two models, an efficient version (VFIMamba-S) and a more strong one (VFIMamba). 
-You can choose what you need by chang the parameter ```model```.
+We provide two models, an efficient version (VFIMamba-S) and a stronger one (VFIMamba). 
+You can choose what you need by changing the parameter ```model```.
 
 ```shell
 python demo_2x.py  --model **model[VFIMamba_S/VFIMamba]**      # for 2x interpolation
