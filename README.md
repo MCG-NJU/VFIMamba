@@ -68,7 +68,7 @@ python demo_2x.py  --model VFIMamba --scale 0.5 # for 2K inputs with VFIMamba
    * [SNU-FILM dataset](https://myungsub.github.io/CAIN/)
    * [X4K1000FPS dataset](https://www.dropbox.com/sh/duisote638etlv2/AABJw5Vygk94AWjGM4Se0Goza?dl=0)
 
-2. Download the [model checkpoints](https://huggingface.co/MCG-NJU/VFIMamba) and put the ```ckpt``` folder into the root dir.
+2. Download the [model checkpoints](https://huggingface.co/MCG-NJU/VFIMamba_ckpts/tree/main) and put the ```ckpt``` folder into the root dir.
 
 For all benchmarks:
 
