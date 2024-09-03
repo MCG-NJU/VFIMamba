@@ -40,6 +40,13 @@ CUDA 11.7
 We provide two models, an efficient version (VFIMamba-S) and a stronger one (VFIMamba). 
 You can choose what you need by changing the parameter ```model```.
 
+### Hugging Face Demo
+For Hugging Face demo, please refer to [the code here](https://github.com/MCG-NJU/VFIMamba/blob/main/hf_demo_2x.py).
+```bash
+python hf_demo_2x.py --model **model[VFIMamba_S/VFIMamba]**      # for 2x interpolation
+```
+
+### Manually Load
 ```shell
 python demo_2x.py  --model **model[VFIMamba_S/VFIMamba]**      # for 2x interpolation
 python demo_Nx.py --n 8 --model **model[VFIMamba_S/VFIMamba]** # for 8x interpolation
