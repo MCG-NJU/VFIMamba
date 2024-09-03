@@ -5,7 +5,13 @@ from model.warplayer import warp
 
 from config import *
 
-    
+def convert(param):
+    return {
+        k.replace("module.", ""): v
+        for k, v in param.items()
+        if "module." in k and 'attn_mask' not in k and 'HW' not in k
+    }
+
 class Model:
     def __init__(self, local_rank):
         backbonetype, multiscaletype = MODEL_CONFIG['MODEL_TYPE']
@@ -30,17 +36,35 @@ class Model:
         self.net.to(torch.device("cuda"))
 
     def load_model(self, name=None, rank=0, real=False):
-        def convert(param):
-            return {
-            k.replace("module.", ""): v
-                for k, v in param.items()
-                if "module." in k and 'attn_mask' not in k and 'HW' not in k
-            }
         if rank <= 0 :
             if name is None:
                 name = self.name
             print(f"loading {name} ckpt")
             self.net.load_state_dict(convert(torch.load(f'ckpt/{name}.pkl')), strict=True)
+
+    @classmethod
+    def from_pretrained(cls, model_id, local_rank=-1):
+        try:
+            from huggingface_hub import hf_hub_download
+        except ImportError:
+            raise ImportError(
+                "Model is hosted on the Hugging Face Hub. "
+                "Please install huggingface_hub by running `pip install huggingface_hub` to load the weights correctly."
+            )
+        if "/" not in model_id:
+            model_id = "MCG-NJU/" + model_id
+        ckpt_path = hf_hub_download(repo_id=model_id, filename="model.pkl")
+        print(f"loading {model_id} ckpt")
+        checkpoint = torch.load(ckpt_path)
+        from transformers import PretrainedConfig
+        cfg = PretrainedConfig.from_pretrained(model_id)
+        MODEL_CONFIG['MODEL_ARCH'] = init_model_config(
+            F=cfg.F,
+            depth=cfg.depth,
+        )
+        model = cls(local_rank)
+        model.net.load_state_dict(convert(checkpoint), strict=True)
+        return model
 
     @torch.no_grad()
     def hr_inference(self, img0, img1, local, TTA = False, down_scale = 1.0, timestep = 0.5, fast_TTA = False):
