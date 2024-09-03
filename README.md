@@ -34,7 +34,7 @@ CUDA 11.7
 
 ## :sunglasses:	Play with Demos
 
-1. Download the [model checkpoints](https://huggingface.co/MCG-NJU/VFIMamba) and put the ```ckpt``` folder into the root dir.
+1. Download the [model checkpoints](https://huggingface.co/MCG-NJU/VFIMamba_ckpts/tree/main) and put the ```ckpt``` folder into the root dir.
 2. Run the following commands to generate 2x and Nx (arbitrary) frame interpolation demos:
 
 We provide two models, an efficient version (VFIMamba-S) and a more strong one (VFIMamba). 
