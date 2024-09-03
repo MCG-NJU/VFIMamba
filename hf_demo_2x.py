@@ -8,12 +8,11 @@ from imageio import mimsave
 
 '''==========import from our code=========='''
 sys.path.append('.')
-import config as cfg
 from Trainer_finetune import Model
 from benchmark.utils.padder import InputPadder
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--model', default='VFIMamba_S', type=str)
+parser.add_argument('--model', default='VFIMamba', type=str)
 parser.add_argument('--scale', default=0, type=float)
 
 args = parser.parse_args()
@@ -22,15 +21,7 @@ assert args.model in ['VFIMamba_S', 'VFIMamba'], 'Model not exists!'
 
 '''==========Model setting=========='''
 TTA = False
-if args.model == 'VFIMamba':
-    TTA = True
-    cfg.MODEL_CONFIG['LOGNAME'] = 'VFIMamba'
-    cfg.MODEL_CONFIG['MODEL_ARCH'] = cfg.init_model_config(
-        F = 32,
-        depth = [2, 2, 2, 3, 3]
-    )
-model = Model(-1)
-model.from_pretrained(args.model)
+model = Model.from_pretrained(args.model)
 model.eval()
 model.device()
 
