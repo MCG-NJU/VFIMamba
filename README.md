@@ -8,6 +8,7 @@
 
 ## :boom: News
 
+* **[2024.09.3] Support for directly importing model weights from HuggingFace. Thanks to the HuggingFace team for their efforts!**
 * **[2024.07.3] Demo and evaluation codes released.**
 
 ## :satisfied: HighLights
