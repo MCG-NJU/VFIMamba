@@ -1,8 +1,17 @@
+"""
+Same Laplacian-pyramid loss as the base repo, with one change: inputs are
+cast to float32 at the top of forward(). Without this, calling the loss
+inside a torch.cuda.amp.autocast(enabled=True) block can raise a dtype
+mismatch -- conv2d (an autocast op) runs the pyramid convolutions in
+float16, but upsample() below builds its zero-padding tensor with
+torch.zeros(...), which defaults to float32, and torch.cat refuses to
+concatenate float16 with float32. Casting once at the top of forward()
+sidesteps that without needing every call site to remember to do it.
+"""
 import torch
 import torch.nn as nn
-import numpy as np 
+import numpy as np
 import torch.nn.functional as F
-from .matching import forward_warp
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -51,9 +60,10 @@ class LapLoss(torch.nn.Module):
         super(LapLoss, self).__init__()
         self.max_levels = max_levels
         self.gauss_kernel = gauss_kernel(channels=channels)
-        
+
     def forward(self, input, target):
+        input = input.float()
+        target = target.float()
         pyr_input  = laplacian_pyramid(img=input, kernel=self.gauss_kernel, max_levels=self.max_levels)
         pyr_target = laplacian_pyramid(img=target, kernel=self.gauss_kernel, max_levels=self.max_levels)
         return sum(torch.nn.functional.l1_loss(a, b) for a, b in zip(pyr_input, pyr_target))
-
